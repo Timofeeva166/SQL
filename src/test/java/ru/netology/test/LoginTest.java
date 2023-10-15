@@ -64,11 +64,13 @@ public class LoginTest {
 
     @Test
     void blocksUserIfPasswordIsInvalidForThreeTimes() { //пользователя блокируют, если он ввёл пароль неправильно 3 раза
+        var authInfo = DataHelper.getAuthInfo();
         for (int i = 0; i < 3; i++) {
             refresh();
-            loginPage.validLogin(new AuthInfo("vasya", getFakePassword()));
+            loginPage.login(new AuthInfo(authInfo.getLogin(), getFakePassword()));
             loginPage.errorMessage("Неверно указан логин или пароль");
         }
         Assertions.assertEquals("blocked", getStatus());
     }
+
 }
